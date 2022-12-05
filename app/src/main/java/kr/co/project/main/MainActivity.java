@@ -4,19 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 
 import kr.co.project.R;
-import kr.co.project.util.PreferenceUtils;
+import kr.co.project.view.sign.signup.SignUpFragment1;
+import kr.co.project.view.sign.util.PreferenceUtils;
 import kr.co.project.view.sign.LoginFragments;
 import kr.co.project.view.sign.SignUpFragment;
 
@@ -26,17 +32,22 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 mPager;
     private int num_page = 3;
     private FragmentStateAdapter pageAdapter;
+    private NavController navController;
+    private NavHostFragment navHostFragment;
     private long backBtnTime = 0;
     private FragmentTransaction fragmentTransaction;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+            String packageName = this.getPackageName();
+            WebView.setDataDirectorySuffix(packageName);
+        }
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-
 
         PreferenceUtils.init(getApplicationContext());
         PreferenceUtils.setConnected(true);

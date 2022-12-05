@@ -1,4 +1,4 @@
-package kr.co.project.util;
+package kr.co.project.view.sign.util;
 
 import android.content.Context;
 import android.view.GestureDetector;

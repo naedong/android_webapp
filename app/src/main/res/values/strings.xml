@@ -1,12 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">project</string>
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+
+
+    <string-array name="number_array">
+        <item>010</item>
+        <item>011</item>
+        <item>012</item>
+        <item>017</item>
+    </string-array>
+
+    <string-array name="email_array">
+        <item>직접입력</item>
+        <item>naver.com</item>
+        <item>daum.net</item>
+        <item>google.com</item>
+    </string-array>
+
+
 </resources>

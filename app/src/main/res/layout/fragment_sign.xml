@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
+
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
@@ -19,24 +23,46 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-    <ProgressBar
+<!--    <ProgressBar-->
+<!--        android:id="@+id/pb_sign"-->
+<!--        style="@style/Widget.AppCompat.ProgressBar.Horizontal"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="20dp"-->
+
+<!--        android:max="10"-->
+<!--        android:progressTint="@color/white"-->
+<!--        android:background="@drawable/custom_progress"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/start"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent">-->
+<!--    </ProgressBar>-->
+
+
+    <com.skydoves.progressview.ProgressView
+
         android:id="@+id/pb_sign"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-
-        android:max="10"
-        android:progressTint="@color/white"
-        android:background="@drawable/custom_progress"
+        android:layout_height="50dp"
+        app:progressView_radius="10dp"
+        app:progressView_min="0"
+        app:progressView_max="6"
+        app:progressView_labelSize="20dp"
+        app:progressView_labelColorInner="@color/white"
+        app:progressView_labelColorOuter="@color/black"
+        app:progressView_labelTypeface="bold"
+        app:progressView_colorBackground="#838786"
+        app:progressView_colorProgress="@color/sea"
         android:layout_marginBottom="50dp"
-        app:layout_constraintBottom_toTopOf="@+id/start"
+        app:layout_constraintBottom_toTopOf="@+id/btn_sign_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-    </ProgressBar>
 
+    </com.skydoves.progressview.ProgressView>
 
     <Button
-        android:id="@+id/start"
+        android:id="@+id/btn_sign_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
@@ -80,10 +106,9 @@
         android:id="@+id/carrots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="-10dp"
+        android:layout_marginStart="-20dp"
         android:src="@drawable/carrots"
-        android:translationY="-750dp"
+        android:translationY="-300dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,9 +118,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="220dp"
         android:src="@drawable/potato"
         android:translationX="-400dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carrots" />
 
@@ -113,7 +139,7 @@
         android:id="@+id/pickel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="-230dp"
         android:src="@drawable/pickel"
         android:translationX="400dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +149,7 @@
         android:id="@+id/onion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="200dp"
         android:layout_marginRight="10dp"
         android:src="@drawable/onion"
         android:translationX="400dp"

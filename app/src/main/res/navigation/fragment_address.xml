@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_address"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/signUpFragment1">
+
+    <fragment
+        android:id="@+id/addressFragment2"
+        tools:layout="@layout/fragment_address"
+        android:name="kr.co.project.view.sign.signup.address.AddressFragment"
+        android:label="AddressFragment" >
+        <action
+            android:id="@+id/action_addressFragment2_to_signUpFragment12"
+            app:destination="@id/signUpFragment1" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment1"
+        tools:layout="@layout/fragment_first"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment1"
+        android:label="SignUpFragment1" >
+        <action
+            android:id="@+id/action_signUpFragment12_to_addressFragment2"
+            app:destination="@id/addressFragment2" />
+        <action
+            android:id="@+id/action_signUpFragment1_to_signUpFragment2"
+            app:destination="@id/signUpFragment2" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="kr.co.project.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/signUpFragment"
+        tools:layout="@layout/fragment_sign"
+        android:name="kr.co.project.view.sign.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpFragment3"
+            app:destination="@id/signUpFragment3" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment2"
+        tools:layout="@layout/fragment_second"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment2"
+        android:label="SignUpFragment2" />
+    <fragment
+        android:id="@+id/signUpFragment3"
+        tools:layout="@layout/fragment_third"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment3"
+        android:label="SignUpFragment3" >
+        <action
+            android:id="@+id/action_signUpFragment3_to_signUpFragment1"
+            app:destination="@id/signUpFragment1" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragments"
+        tools:layout="@layout/fragment_login"
+        android:name="kr.co.project.view.sign.LoginFragments"
+        android:label="LoginFragments" >
+        <action
+            android:id="@+id/action_loginFragments_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+</navigation>

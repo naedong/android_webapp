@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginafter"
+    app:startDestination="@id/mainActivity2">
+
+    <activity
+        android:id="@+id/mainActivity2"
+        android:name="kr.co.project.main.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/loginFragments2"
+        tools:layout="@layout/fragment_login"
+        android:name="kr.co.project.view.sign.LoginFragments"
+        android:label="LoginFragments" />
+</navigation>

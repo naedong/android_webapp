@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 
 import kr.co.project.R;
 import kr.co.project.main.MainActivity;
-import kr.co.project.util.OnSwipeTouchListener;
+import kr.co.project.view.sign.util.OnSwipeTouchListener;
 
 public class LoginFragments extends Fragment {
     private ImageView imgSign;
@@ -111,4 +111,11 @@ public class LoginFragments extends Fragment {
         Log.i("[LoginFragment]", "실행확인11");
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+    }
+
 }

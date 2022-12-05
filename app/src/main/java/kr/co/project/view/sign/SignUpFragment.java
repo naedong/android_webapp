@@ -1,6 +1,8 @@
 package kr.co.project.view.sign;
 
+
 import android.animation.ArgbEvaluator;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,38 +10,63 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.gson.Gson;
+import com.skydoves.progressview.TextForm;
+
 import kr.co.project.R;
 import kr.co.project.adapter.BookPageAdapter;
+import kr.co.project.api.RetrofitAPI;
+import kr.co.project.config.RetrofitConfig;
+import kr.co.project.databinding.FragmentFirstBinding;
+import kr.co.project.databinding.FragmentSecondBinding;
+import kr.co.project.databinding.FragmentSignBinding;
+import kr.co.project.databinding.FragmentThirdBinding;
 import kr.co.project.main.BaseFragment;
+import kr.co.project.main.MainActivity;
+import kr.co.project.view.sign.signup.address.AddressFragment;
 import kr.co.project.vo.Maybe;
+import kr.co.project.vo.MembSign;
+import kr.co.project.vo.PublicData;
+import kr.co.project.vo.SignDTO;
+import kr.co.project.vo.SignLiveModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class SignUpFragment extends BaseFragment {
+public class SignUpFragment extends Fragment {
+    private static String TAG = SignUpFragment.class.getSimpleName();
 
-    private ViewPager2 mPager;
     private int num_page = 3;
-    private ProgressBar pbSign;
+    private MembSign membSign;
     private int MEDIUM_DISTANCE = 400;
     private int FAR_DISTANCE = 600;
     private int[] colors = null;
     private ArgbEvaluator argbEvaluator;
-    private View dots;
+    private Maybe maybe;
     private  BookPageAdapter bookAdapter ;
     private long backBtnTime = 0;
-    private FragmentTransaction fragmentTransaction;
-    private ImageView  potato, onion, pickel, carrots, half_circle
-            , sun, mars, venus, moon, saturn, leaf, potint_leaf, sanawbar, ears_tree
-            , upper_purple_rose, purple_rose, points_leaf;
-    private View night_dots;
+    private RetrofitConfig retrofitConfig;
+    private RetrofitAPI retrofitAPI;
+    private SignLiveModel signLiveModel;
+    private FragmentFirstBinding firstBinding;
+    private FragmentThirdBinding thirdBinding;
+    private FragmentSignBinding binding;
 
     public static SignUpFragment newInstance(){
         SignUpFragment sf = new SignUpFragment();
@@ -57,12 +84,12 @@ public class SignUpFragment extends BaseFragment {
 
     private void initPager() {
         BookPageAdapter bookAdapter = new BookPageAdapter(getActivity(), num_page);
-        mPager.setAdapter(bookAdapter);
+        binding.pager.setAdapter(bookAdapter);
         viewScroll(bookAdapter);
     }
 
     private void viewScroll(BookPageAdapter bookAdapter) {
-        mPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+        binding.pager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
                 super.onPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -91,72 +118,72 @@ public class SignUpFragment extends BaseFragment {
     }
 
     private void animationStart(float positionOffset) {
-        dots.animate().alpha(1 - positionOffset).setDuration(0).start();
+        binding.dots.animate().alpha(1 - positionOffset).setDuration(0).start();
         hideVegi(positionOffset);
         showSpaceObject(positionOffset);
     }
 
     private void showSpaceObject(float positionOffset) {
-        mars.animate().translationX(0 - (MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.mars.animate().translationX(0 - (MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        moon.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.moon.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        saturn.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.saturn.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        venus.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
+        binding.venus.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        sun.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
+        binding.sun.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
                 .setDuration(0).start();
 
     }
 
     private void hideVegi(float positionOffset) {
-        night_dots.animate().alpha(positionOffset).setDuration(0).start();
-        potato.animate().translationX(0 - ((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        onion.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        pickel.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        carrots.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
-        half_circle.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.nightDots.animate().alpha(positionOffset).setDuration(0).start();
+        binding.potato.animate().translationX(0 - ((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.onion.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.pickel.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.carrots.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.rightHalfCircle.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
 
     }
 
 
     private void animateDots(float positionOffset) {
         hidePlantesAnimaion(positionOffset);
-        dots.animate().alpha(positionOffset).setDuration(0).start();
+        binding.dots.animate().alpha(positionOffset).setDuration(0).start();
         showObjectAnimaion(positionOffset);
 
     }
 
     private void showObjectAnimaion(float positionOffset) {
-        potato.animate().translationX(0 - (MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.potato.animate().translationX(0 - (MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        onion.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.onion.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        pickel.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
+        binding.pickel.animate().translationX((MEDIUM_DISTANCE - (MEDIUM_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        carrots.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
+        binding.carrots.animate().translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset)))
                 .setDuration(0).start();
-        half_circle.animate()
+        binding.rightHalfCircle.animate()
                 .translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset))).setDuration(0)
                 .start();
     }
 
     private void hidePlantesAnimaion(float positionOffset) {
 
-        leaf.animate().translationX((0 - (MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        sanawbar.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        ears_tree.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
-        upper_purple_rose.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
-        purple_rose.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
-        points_leaf.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.leaf.animate().translationX((0 - (MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.sanawbar.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.earsTree.animate().translationX(((MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.upperPurpleRose.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.purpleRose.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
+        binding.pointsLeaf.animate().translationY(0 - ((FAR_DISTANCE * positionOffset))).setDuration(0).start();
 
     }
 
     private void changePageBackgroundSwipe(int position, float positionOffset, int positionOffsetPixels)
     {
         if(position < bookAdapter.getItemCount() - 1 && position < colors.length - 1){
-            mPager.setBackgroundColor(
+            binding.pager.setBackgroundColor(
                     (Integer) argbEvaluator.evaluate(
                             positionOffset,
                             colors[position],
@@ -165,20 +192,29 @@ public class SignUpFragment extends BaseFragment {
             );
         }
         else{
-            mPager.setBackgroundColor(colors[colors.length - 1]);
+            binding.pager.setBackgroundColor(colors[colors.length - 1]);
         }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        membSign = new MembSign();
         argbEvaluator = new ArgbEvaluator();
+        retrofitConfig = RetrofitConfig.getInstance();
+        retrofitAPI = retrofitConfig.getRetrofit();
+        signLiveModel = new ViewModelProvider(requireActivity()).get(SignLiveModel.class);
 
     }
 
     public void initProgress(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            pbSign.setProgress(Maybe.value , false);
+            binding.pbSign.setProgress(maybe.value.getValue().floatValue());
+            if(maybe.value.getValue().intValue() == 6){
+                binding.pbSign.setLabelText("회원가입 ㅂㅈ버튼 클릭");
+            }
+            else binding.pbSign.setLabelText(maybe.value.getValue().intValue() + "/ 6");
+
         }
 
     }
@@ -186,34 +222,34 @@ public class SignUpFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_sign, container, false);
+
+
+//        TextForm textForm = new TextForm.Builder(getContext())
+//                .setTextSize(20f)
+//                .setTextColorResource(R.color.white)
+//                .setTextTypeface(R.font.calibri)
+//                .build();
+
+        firstBinding = FragmentFirstBinding.inflate(inflater, container, false);
+        thirdBinding = FragmentThirdBinding.inflate(inflater, container, false);
+        binding = FragmentSignBinding.inflate(inflater, container, false);
+        maybe = new ViewModelProvider(requireActivity()).get(Maybe.class);
+//        binding.pbSign.setLabelSize(20f);
+//        binding.pbSign.setLabelTypeface(R.font.calibri);
+
+//        binding.pbSign.applyTextForm(textForm);
+
         bookAdapter = new BookPageAdapter(getActivity(), 3);
-        colors = new int[3];
-        Maybe.value = 0;
-        mPager = view.findViewById(R.id.pager);
-        dots = view.findViewById(R.id.dots);
-        sun = view.findViewById(R.id.sun);
-        moon = view.findViewById(R.id.moon);
-        mars = view.findViewById(R.id.mars);
-        saturn = view.findViewById(R.id.saturn);
-        potato = view.findViewById(R.id.potato);
-        venus = view.findViewById(R.id.venus);
-        night_dots = view.findViewById(R.id.night_dots);
-        onion = view.findViewById(R.id.onion);
-        pickel = view.findViewById(R.id.pickel);
-        carrots = view.findViewById(R.id.carrots);
-        half_circle = view.findViewById(R.id.right_half_circle);
-        leaf = view.findViewById(R.id.leaf);
-        potint_leaf = view.findViewById(R.id.points_leaf);
-        pbSign = view.findViewById(R.id.pb_sign);
-        sanawbar = view.findViewById(R.id.sanawbar);
-        ears_tree = view.findViewById(R.id.ears_tree);
-        upper_purple_rose = view.findViewById(R.id.upper_purple_rose);
-        purple_rose = view.findViewById(R.id.purple_rose);
-        points_leaf = view.findViewById(R.id.points_leaf);
+         colors = new int[3];
         initColorsList();
         initPager();
-        initProgress();
+        onRegist();
+
+
+
+        maybe.value.observe(getViewLifecycleOwner(), integer ->  {
+            initProgress();
+        });
        // initProgress();
 
 //        mPager.setCurrentItem(3);
@@ -242,23 +278,75 @@ public class SignUpFragment extends BaseFragment {
 //        });
 
 
-
-        return view;
+        onClickSignUp();
+        return binding.getRoot();
     }
+
+    private void onClickSignUp() {
+
+        if(maybe.value.getValue().intValue() >= 6){
+
+            membSign.setMembId(signLiveModel.getUserId().getValue());
+            membSign.setMembPwd(signLiveModel.getUserPwd().getValue());
+            membSign.setMobileNo(signLiveModel.getMobile().getValue());
+            membSign.setMembStatusCd(10);
+            membSign.setMembCls("ROLE_USER");
+            membSign.setMembNm(signLiveModel.getUserName().getValue());
+            PublicData publicData = new PublicData();
+            publicData.setZipCd(signLiveModel.getZip().getValue());
+            publicData.setZipAddr(signLiveModel.getZipaddr().getValue());
+            publicData.setDetailAddr(signLiveModel.getDetaild().getValue());
+            publicData.setEmailAddr(signLiveModel.getEmail().getValue());
+            membSign.setPublicData(publicData);
+        Log.i(TAG, membSign.getMembId());
+            Log.i(TAG, membSign.getMembPwd());
+            Log.i(TAG, membSign.getMobileNo());
+
+            binding.btnSignStart.setOnClickListener(v ->{
+            retrofitAPI.insertUser(membSign).enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                            if (response.isSuccessful()){
+                                if(response.body()){
+                                    FragmentManager fm = getActivity().getSupportFragmentManager();
+                                    FragmentTransaction ft = fm.beginTransaction();
+                                    ft.replace(R.id.main_frame , LoginFragments.newInstance());
+                                    ft.addToBackStack(null);
+
+                                    ft.commit();
+                                }
+
+                            }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                }
+            });
+        });
+        }
+    }
+
+    private void onRegist() {
+
+
+    }
+
 
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.i("[signup]", "스타트확인"+Maybe.value);
+        Log.i("[signup]", "스타트확인");
 
-        initProgress();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.i("[signup]", "실행확인"+Maybe.value);
+        Log.i("[signup]", "실행확인");
+        initProgress();
         
     }
 
@@ -273,6 +361,8 @@ public class SignUpFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
         Log.i("[signup]", "죽음 확인");
+
+            binding = null;
 
     }
 }

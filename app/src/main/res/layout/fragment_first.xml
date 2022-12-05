@@ -7,6 +7,7 @@
     android:background="@color/white"
    >
 
+
     <androidx.appcompat.widget.LinearLayoutCompat
 
         android:layout_width="300dp"
@@ -19,11 +20,17 @@
 
         app:layout_constraintTop_toTopOf="parent">
 
+
+
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
             >
+
+
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -36,25 +43,98 @@
             </ImageView>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/sea"
-                android:paddingLeft="50dp"
+                android:layout_marginLeft="30dp"
                 android:paddingTop="10dp"
-                android:paddingRight="50dp"
+                android:layout_marginTop="30dp"
+                android:paddingLeft="30dp"
+                android:orientation="horizontal"
                 android:theme="@style/EditScreenTextInputLayoutStyle">
 
+                <Spinner
+                    android:id="@+id/si_sign_phone"
+                    android:layout_width="80dp"
+                    android:textAlignment="center"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:spinnerMode="dialog"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp">
+                </Spinner>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="30dp"
+                ></TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="50dp"
+
+                android:layout_marginTop="15dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="120dp"
+                android:orientation="horizontal"
+
+                android:textColorHint="@color/sea"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+
                 <EditText
-                    android:id="@+id/et_sign_id"
+                    android:id="@+id/et_sign_c_phone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/calibri"
-                    android:hint="I D"
-                    android:inputType="textEmailAddress"
+                    android:hint="****"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:maxLength="4"
+                    android:textColor="@android:color/white"
+                    android:textSize="15sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="180dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textSize="30dp"
+                ></TextView>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="200dp"
+                android:orientation="horizontal"
+
+                android:textColorHint="@color/sea"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+
+                <EditText
+                    android:id="@+id/et_sign_e_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:hint="****"
+                    android:inputType="number"
+                    android:maxLength="4"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+                    android:textSize="15sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -62,76 +142,199 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/sea"
-                android:paddingTop="80dp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="70dp"
                 android:theme="@style/EditScreenTextInputLayoutStyle">
-
                 <EditText
-                    android:id="@+id/et_sign_pwd"
-                    android:layout_width="match_parent"
+                    android:id="@+id/et_sigb_certificationNumber"
+                    android:layout_width="75dp"
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/calibri"
-                    android:hint="PASSWORD"
-                    android:inputType="textPassword"
+                    android:hint="인증 번호"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
-
-
             </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColorHint="@color/sea"
-                android:paddingTop="130dp"
-                android:paddingLeft="50dp"
-                android:paddingRight="50dp"
-                android:theme="@style/EditScreenTextInputLayoutStyle">
 
-                <EditText
-                    android:id="@+id/et_sign_repwd"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:drawablePadding="16dp"
-                    android:fontFamily="@font/calibri"
-                    android:hint="CONFIRM PASSWORD"
-                    android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:textColor="@android:color/white"
-                    android:textSize="16sp" />
+            <Button
+                android:id="@+id/btn_sign_phone"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_sign1_background"
+                android:text="휴대폰 인증"
+                android:layout_marginTop="85dp"
+                android:layout_marginLeft="150dp"
+                >
+            </Button>
 
-
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColorHint="@color/sea"
-                android:paddingTop="230dp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="120dp"
                 android:theme="@style/EditScreenTextInputLayoutStyle">
-
                 <EditText
-                    android:id="@+id/et_sign_name"
-                    android:layout_width="match_parent"
+                    android:id="@+id/et_sign_email"
+                    android:layout_width="75dp"
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/calibri"
-                    android:hint="NAME"
-                    android:inputType="textPassword"
+                    android:hint="email"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:layout_marginTop="135dp"
+                android:layout_marginLeft="120dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" @ "
+                android:textSize="20dp"
+                ></TextView>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColorHint="@color/sea"
+                android:layout_marginLeft="100dp"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:layout_marginTop="120dp"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+                <EditText
+                    android:id="@+id/et_sign_c_email"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:textColor="@android:color/white"
                     android:textSize="16sp" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:textColorHint="@color/sea"
+                android:layout_marginLeft="230dp"
+
+                android:layout_marginTop="120dp"
+
+                android:orientation="horizontal"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+                <Spinner
+                    android:id="@+id/si_sign_e_email"
+                    android:layout_width="50dp"
+                    android:textAlignment="center"
+                    android:layout_height="50dp"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:spinnerMode="dialog"
+                    android:textColor="@android:color/white">
+                </Spinner>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:textColorHint="@color/sea"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="190dp"
+                android:orientation="horizontal"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+                <EditText
+                    android:id="@+id/et_sign_zip"
+                    android:layout_width="130dp"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:inputType="number"
+                    android:hint="우편번호"
+                    android:maxLines="1"
+                    android:maxLength="7"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_sign_address"
+                android:layout_width="70dp"
+                android:layout_height="30dp"
+                android:background="@drawable/btn_sign1_background"
+                android:text="주소 찾기"
+                android:layout_marginTop="200dp"
+                android:layout_marginLeft="185dp"
+                >
+            </Button>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textColorHint="@color/sea"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="240dp"
+                android:orientation="horizontal"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+                <EditText
+                    android:id="@+id/et_sign_address"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:inputType="number"
+                    android:hint="주 소"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:textColorHint="@color/sea"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="290dp"
+                android:orientation="horizontal"
+                android:theme="@style/EditScreenTextInputLayoutStyle">
+
+                <EditText
+                    android:id="@+id/et_sign_detail_address"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="16dp"
+                    android:fontFamily="@font/calibri"
+                    android:inputType="number"
+                    android:hint="상 세 주 소"
+                    android:maxLines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </FrameLayout>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
