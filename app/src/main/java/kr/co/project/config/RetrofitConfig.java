@@ -7,13 +7,14 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitConfig {
     private static RetrofitConfig instance = null;
     //        private static com.maina.main_project.spring.api.initMyApi initMyApi;
     private static RetrofitAPI RetrofitAPI;
     //사용하고 있는 서버 BASE 주소
-    private static final String baseUrl = "http://192.168.8.52:8888";
+    private static final String baseUrl = "http://192.168.8.23:8888";
 
 
 
@@ -46,5 +47,21 @@ public class RetrofitConfig {
             instance = new RetrofitConfig();
         }
         return instance;
+    }
+    public RetrofitAPI fcmToken(){
+        HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
+        logInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient client = new OkHttpClient.Builder().addInterceptor(logInterceptor).build();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://fcm.googleapis.com/")
+                .client(client)
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        RetrofitAPI retrofitAPI = retrofit.create(RetrofitAPI.class);
+        return retrofitAPI;
     }
 }

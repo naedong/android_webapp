@@ -6,14 +6,17 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +55,7 @@ import retrofit2.Response;
 public class SignUpFragment extends Fragment {
     private static String TAG = SignUpFragment.class.getSimpleName();
 
-    private int num_page = 3;
+    private int num_page = 2;
     private MembSign membSign;
     private int MEDIUM_DISTANCE = 400;
     private int FAR_DISTANCE = 600;
@@ -64,14 +67,11 @@ public class SignUpFragment extends Fragment {
     private RetrofitConfig retrofitConfig;
     private RetrofitAPI retrofitAPI;
     private SignLiveModel signLiveModel;
-    private FragmentFirstBinding firstBinding;
-    private FragmentThirdBinding thirdBinding;
     private FragmentSignBinding binding;
+    private Toast tast;
+    private SignUpFragment sf;
 
-    public static SignUpFragment newInstance(){
-        SignUpFragment sf = new SignUpFragment();
-        return sf;
-    }
+
 
     private void initColorsList(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -168,7 +168,10 @@ public class SignUpFragment extends Fragment {
                 .translationY(0 - (FAR_DISTANCE - (FAR_DISTANCE * positionOffset))).setDuration(0)
                 .start();
     }
-
+    public static SignUpFragment newInstance(){
+        SignUpFragment sf = new SignUpFragment();
+        return sf;
+    }
     private void hidePlantesAnimaion(float positionOffset) {
 
         binding.leaf.animate().translationX((0 - (MEDIUM_DISTANCE * positionOffset))).setDuration(0).start();
@@ -204,14 +207,14 @@ public class SignUpFragment extends Fragment {
         retrofitConfig = RetrofitConfig.getInstance();
         retrofitAPI = retrofitConfig.getRetrofit();
         signLiveModel = new ViewModelProvider(requireActivity()).get(SignLiveModel.class);
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
     }
 
     public void initProgress(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             binding.pbSign.setProgress(maybe.value.getValue().floatValue());
             if(maybe.value.getValue().intValue() == 6){
-                binding.pbSign.setLabelText("회원가입 ㅂㅈ버튼 클릭");
+                binding.pbSign.setLabelText("회원가입 버튼 클릭");
             }
             else binding.pbSign.setLabelText(maybe.value.getValue().intValue() + "/ 6");
 
@@ -230,8 +233,6 @@ public class SignUpFragment extends Fragment {
 //                .setTextTypeface(R.font.calibri)
 //                .build();
 
-        firstBinding = FragmentFirstBinding.inflate(inflater, container, false);
-        thirdBinding = FragmentThirdBinding.inflate(inflater, container, false);
         binding = FragmentSignBinding.inflate(inflater, container, false);
         maybe = new ViewModelProvider(requireActivity()).get(Maybe.class);
 //        binding.pbSign.setLabelSize(20f);
@@ -245,7 +246,7 @@ public class SignUpFragment extends Fragment {
         initPager();
         onRegist();
 
-
+        onBack();
 
         maybe.value.observe(getViewLifecycleOwner(), integer ->  {
             initProgress();
@@ -290,12 +291,14 @@ public class SignUpFragment extends Fragment {
             membSign.setMembPwd(signLiveModel.getUserPwd().getValue());
             membSign.setMobileNo(signLiveModel.getMobile().getValue());
             membSign.setMembStatusCd(10);
-            membSign.setMembCls("ROLE_USER");
+            membSign.setMembCls("사용자");
+
             membSign.setMembNm(signLiveModel.getUserName().getValue());
             PublicData publicData = new PublicData();
             publicData.setZipCd(signLiveModel.getZip().getValue());
             publicData.setZipAddr(signLiveModel.getZipaddr().getValue());
             publicData.setDetailAddr(signLiveModel.getDetaild().getValue());
+            Log.i(TAG, "onClickSignUp: detail"+signLiveModel.getDetaild().getValue());
             publicData.setEmailAddr(signLiveModel.getEmail().getValue());
             membSign.setPublicData(publicData);
         Log.i(TAG, membSign.getMembId());
@@ -306,21 +309,51 @@ public class SignUpFragment extends Fragment {
             retrofitAPI.insertUser(membSign).enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+
+
+                    LayoutInflater inflater1 = getLayoutInflater();
+                    View layout = inflater1.inflate(R.layout.toast_board, (ViewGroup) v.findViewById(R.id.toast_layout));
+                    TextView textView = layout.findViewById(R.id.tx_toast_board);
+                    textView.setText("회원가입에 성공하였습니다.");
+
                             if (response.isSuccessful()){
                                 if(response.body()){
+
+                                    tast = Toast.makeText(getContext().getApplicationContext(), "회원가입에 성공하였습니다.", Toast.LENGTH_LONG);
+                                    tast.setGravity(Gravity.CENTER,0,0);
+                                    tast.setView(layout);
+                                    tast.show();
+
+
                                     FragmentManager fm = getActivity().getSupportFragmentManager();
                                     FragmentTransaction ft = fm.beginTransaction();
-                                    ft.replace(R.id.main_frame , LoginFragments.newInstance());
+                                    LoginFragments lf = null;
+                                    ft.replace(R.id.main_frame , lf.newInstance());
                                     ft.addToBackStack(null);
-
                                     ft.commit();
                                 }
+                                else {
+                                    tast = Toast.makeText(getContext().getApplicationContext(), "회원가입에 살패하였습니다.", Toast.LENGTH_LONG);
+                                    tast.setGravity(Gravity.CENTER,0,0);
+                                    tast.setView(layout);
+                                    tast.show();
 
+
+                                }
                             }
                 }
 
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
+                    LayoutInflater inflater1 = getLayoutInflater();
+                    View layout = inflater1.inflate(R.layout.toast_board, (ViewGroup) v.findViewById(R.id.toast_layout));
+                    TextView textView = layout.findViewById(R.id.tx_toast_board);
+                    textView.setText("회원가입에 성공하였습니다.");
+
+                    tast = Toast.makeText(getContext().getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG);
+                    tast.setGravity(Gravity.CENTER,0,0);
+                    tast.setView(layout);
+                    tast.show();
 
                 }
             });
@@ -333,7 +366,15 @@ public class SignUpFragment extends Fragment {
 
     }
 
+    public void onBack(){
+        LoginFragments lf = null;
+            binding.btnSignBack.setOnClickListener(v -> {
 
+                getActivity().getSupportFragmentManager().beginTransaction().remove(this)
+                        .replace(R.id.main_frame, lf.newInstance()).commit();
+                getActivity().getSupportFragmentManager().popBackStack();
+            });
+        }
 
     @Override
     public void onStart() {

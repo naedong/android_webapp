@@ -15,6 +15,7 @@ public class SignLiveModel extends ViewModel {
     private final MutableLiveData<String> zipaddr = new MutableLiveData<>();
     private final MutableLiveData<String> detaild = new MutableLiveData<>();
     private final MutableLiveData<String> email = new MutableLiveData<>();
+
     public MutableLiveData<String> getDetaild() {
         return detaild;
     }

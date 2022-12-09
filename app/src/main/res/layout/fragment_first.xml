@@ -322,7 +322,7 @@
                     android:layout_height="match_parent"
                     android:drawablePadding="16dp"
                     android:fontFamily="@font/calibri"
-                    android:inputType="number"
+                    android:inputType="text"
                     android:hint="상 세 주 소"
                     android:maxLines="1"
                     android:textColor="@android:color/white"

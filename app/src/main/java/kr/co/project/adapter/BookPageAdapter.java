@@ -8,6 +8,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import java.util.List;
 
+import kr.co.project.view.pay.MoneyChageFragment;
 import kr.co.project.view.sign.SignUpFragment;
 import kr.co.project.view.sign.signup.SignUpFragment1;
 import kr.co.project.view.sign.signup.SignUpFragment2;
@@ -24,8 +25,6 @@ public class BookPageAdapter extends FragmentStateAdapter {
         mCount = count;
     }
 
-
-
     @NonNull
     @Override
     public Fragment createFragment(int position) {
@@ -38,10 +37,13 @@ public class BookPageAdapter extends FragmentStateAdapter {
         else if (position == 2){
             return  new SignUpFragment2();
         }
-        else{
+        else if (position == 0 ){
             return  new SignUpFragment3();
         }
-
+        else if (position ==4){
+            return new MoneyChageFragment();
+        }
+    return null;
 //        if(index== 2 ) return new EndFragment();
 //        else if(index==1) return new MypageFragment();
 //        else

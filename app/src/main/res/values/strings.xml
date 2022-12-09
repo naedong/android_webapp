@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <string name="PREFERENCE_KEY_USER_ID">userId</string>
+    <string name="PREFERENCE_KEY_CONNECTED">connected</string>
+    <string name="PREFERENCE_KEY_USER_TOKEN">""</string>
+    <string name="API_KEY">	AAAAUjMVNdI:APA91bE_Ck9U30Vn3uQ4iX8pFq3nDILK269d41-mQtdS3Civ7dxJ4QdB6W7q7Lo6i9uf6nptfRVjKZwW5DjTFqX7UKRPtzVsmEw3YdHyYbQU7dt_tP-5-ClVbGt-SpxHNFP3tr62T39D</string>
     <string-array name="number_array">
         <item>010</item>
         <item>011</item>

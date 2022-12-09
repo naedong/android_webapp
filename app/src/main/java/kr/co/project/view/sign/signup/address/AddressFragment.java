@@ -25,7 +25,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavHostController;
 
-import kr.co.project.api.BrigeInterface;
 import kr.co.project.databinding.FragmentAddressBinding;
 import kr.co.project.databinding.FragmentFirstBinding;
 import kr.co.project.view.sign.SignUpFragment;

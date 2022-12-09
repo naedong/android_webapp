@@ -6,6 +6,7 @@ public class PublicData {
 
     @SerializedName("detailAddr")
     private String detailAddr;
+
     @SerializedName("emailAddr")
     private String emailAddr;
 

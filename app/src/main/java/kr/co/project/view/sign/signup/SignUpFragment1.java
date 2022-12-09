@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -54,8 +55,7 @@ public class SignUpFragment1 extends Fragment {
     private ArrayAdapter<CharSequence> adapter ;
     private ArrayAdapter<CharSequence> emailadapter ;
     private String email, phone, verification;
-    private NavHostFragment navHostFragment;
-    private NavController navController;
+
     private RetrofitConfig retrofitConfig;
     private RetrofitAPI retrofitAPI;
     private SignDTO signDTO;
@@ -80,6 +80,7 @@ public class SignUpFragment1 extends Fragment {
         retrofitConfig = RetrofitConfig.getInstance();
         retrofitAPI = retrofitConfig.getRetrofit();
         addressData.zipCd.setValue(0);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         addressData.fulladdress.setValue("");
         adapter = ArrayAdapter.createFromResource(getContext(),R.array.number_array,R.layout.spinner_item);
         emailadapter = ArrayAdapter.createFromResource(getContext(), R.array.email_array , R.layout.spinner_item);
@@ -155,6 +156,23 @@ public class SignUpFragment1 extends Fragment {
                 signLiveModel.getMobile().setValue(phone);
             }
         });
+        binding.etSignDetailAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                signLiveModel.getDetaild().setValue(s.toString());
+            }
+        });
+
         onPhoneCheck();
         onPhoneSign();
 
@@ -244,17 +262,6 @@ public class SignUpFragment1 extends Fragment {
     }
 
 
-    private void setLive() {
-
-        addressData.zipCd.observe(getViewLifecycleOwner(), Integer ->  {
-            initZipCd();
-        });
-        addressData.fulladdress.observe(getViewLifecycleOwner(), String ->  {
-            initFullAddress();
-        });
-
-
-    }
 
     private void initZipCd() {
         binding.etSignZip.setText(
@@ -272,7 +279,7 @@ public class SignUpFragment1 extends Fragment {
             maybe.value.setValue(maybe.value.getValue().intValue() + 1);
 
             signLiveModel.getZipaddr().setValue(addressData.fulladdress.getValue());
-            signLiveModel.getDetaild().setValue(binding.etSignDetailAddress.getText().toString());
+            Log.i(TAG, " "+binding.etSignDetailAddress.getText().toString());
         }
     }
 
@@ -297,9 +304,6 @@ public class SignUpFragment1 extends Fragment {
 
     private void setAddress() {
         binding.btnSignAddress.setOnClickListener(v -> {
-
-
-
             FragmentManager fm = getActivity().getSupportFragmentManager();
             FragmentTransaction ft = fm.beginTransaction();
             ft.replace(R.id.main_frame , AddressFragment.newInstance());

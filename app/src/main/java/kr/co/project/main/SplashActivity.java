@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
     {
         Context context;
         LayoutInflater mLayoutInflater;
-        ArrayList pages = new ArrayList<>();
+        ArrayList<Object> pages = new ArrayList<>();
 
         public PokerPagerAdapter(Context context) {
             this.context = context;

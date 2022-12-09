@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+
+    <fragment
+        android:id="@+id/loginFragments3"
+        tools:layout="@layout/fragment_login"
+        android:name="kr.co.project.view.sign.LoginFragments"
+        android:label="LoginFragments" >
+        <action
+            android:id="@+id/action_loginFragments3_to_signUpFragment4"
+            app:destination="@id/signUpFragment4" />
+        <action
+            android:id="@+id/action_loginFragments3_to_navigation4"
+            app:destination="@id/navigation4" />
+
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment4"
+        tools:layout="@layout/fragment_sign"
+
+        android:name="kr.co.project.view.sign.SignUpFragment"
+        android:label="SignUpFragment" >
+        <action
+            android:id="@+id/action_signUpFragment4_to_signUpFragment12"
+            app:destination="@id/signUpFragment1" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_first"
+        android:id="@+id/signUpFragment2"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment1"
+        android:label="SignUpFragment1" >
+        <action
+            android:id="@+id/action_signUpFragment2_to_signUpFragment3"
+            app:destination="@id/signUpFragment3" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_second"
+        android:id="@+id/signUpFragment3"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment2"
+        android:label="SignUpFragment2" >
+        <action
+            android:id="@+id/action_signUpFragment3_to_signUpFragment13"
+            app:destination="@id/signUpFragment1" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment1"
+        tools:layout="@layout/fragment_third"
+        android:name="kr.co.project.view.sign.signup.SignUpFragment3"
+        android:label="SignUpFragment3" >
+        <action
+            android:id="@+id/action_signUpFragment1_to_signUpFragment23"
+            app:destination="@id/signUpFragment2" />
+    </fragment>
+    <navigation android:id="@+id/navigation4" />
+    <navigation android:id="@+id/navigation6"
+        app:startDestination="@id/mainActivity4">
+        <activity
+            android:id="@+id/mainActivity4"
+            android:name="kr.co.project.main.MainActivity"
+            android:label="activity_main"
+            tools:layout="@layout/activity_main" />
+        <action
+            android:id="@+id/action_global_loginFragments3"
+            app:destination="@id/loginFragments3" />
+        <action
+            android:id="@+id/action_global_navigation4"
+            app:destination="@id/navigation4" />
+    </navigation>
+</navigation>

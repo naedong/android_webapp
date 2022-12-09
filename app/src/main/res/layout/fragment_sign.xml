@@ -54,7 +54,7 @@
         app:progressView_labelTypeface="bold"
         app:progressView_colorBackground="#838786"
         app:progressView_colorProgress="@color/sea"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_sign_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -65,7 +65,7 @@
         android:id="@+id/btn_sign_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="80dp"
         android:background="@drawable/text_round_backgound"
         android:paddingStart="80dp"
         android:paddingTop="15dp"
@@ -80,6 +80,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btn_sign_back"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="뒤로 가기"
+        android:background="@drawable/btn_sign1_background"
+        app:layout_constraintBottom_toBottomOf="@+id/pager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_sign_start"></Button>
     <View
         android:id="@+id/night_dots"
         android:layout_width="match_parent"

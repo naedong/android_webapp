@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config xmlns:tools="http://schemas.android.com/tools">
+    <domain-config cleartextTrafficPermitted="true" >
+<!--        <domain includeSubdomains="true">https://77e4-118-36-251-47.jp.ngrok.io/</domain>-->
+
+        <domain includeSubdomains="true">118.36.251.47</domain>
+        <domain includeSubdomains="true">192.168.8.23</domain>
+        <domain includeSubdomains="true">192.168.8.90</domain>
+
+        <trust-anchors>
+            <certificates src="system" />
+
+        </trust-anchors>
+    </domain-config>
+</network-security-config>

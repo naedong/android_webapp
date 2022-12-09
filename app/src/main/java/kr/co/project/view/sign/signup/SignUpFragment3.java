@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,7 +46,7 @@ public class SignUpFragment3 extends BaseFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding =  FragmentThirdBinding.inflate(inflater, container, false);
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
         binding.btnSignIdChk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,7 +162,7 @@ public class SignUpFragment3 extends BaseFragment {
                   if (!TextUtils.isEmpty(binding.etSignName.getText()) && binding.etSignName.getText().length() > 2) {
                       chekcName ++;
                       checkName(chekcName);
-                  } else if (TextUtils.isEmpty(binding.etSignName.getText())) {
+                  } else if (TextUtils.isEmpty(binding.etSignName.getText())&& binding.etSignName.getText().length() < 2) {
                       maybe.value.setValue(maybe.value.getValue().intValue() - 1);
                         chekcName = 0;
                   }
